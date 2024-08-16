@@ -14,9 +14,9 @@ import javax.naming.AuthenticationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ExpiredJwtException.class)
-    public ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException expiredJwtException){
+    public ResponseEntity<RestErrorResponse> handleExpiredJwtException(ExpiredJwtException expiredJwtException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(expiredJwtException.getMessage());
+                .body(new RestErrorResponse(HttpStatus.BAD_REQUEST.value(), expiredJwtException.getMessage()));
     }
 
 
