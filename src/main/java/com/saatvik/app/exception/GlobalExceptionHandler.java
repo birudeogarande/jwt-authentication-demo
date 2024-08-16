@@ -30,16 +30,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new RestErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage()));
     }
-
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<RestErrorResponse> handleAllException(Exception exception){
-
-        log.error(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new RestErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Something went wrong..."));
-    }
-
-
     @ExceptionHandler({ AuthenticationException.class })
     @ResponseBody
     public ResponseEntity<RestErrorResponse> handleAuthenticationException(AuthenticationException exception) {
