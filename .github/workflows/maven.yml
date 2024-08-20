@@ -25,10 +25,11 @@ jobs:
           # The MySQL docker container requires these environment variables to be set
           # so we can create and migrate the test database.
           # See: https://hub.docker.com/_/mysql
-            DATABASE_NAME: university
-            DATABASE_USERNAME: root
-            DATABASE_PASSWORD: password
-            DATABASE_ENDPOINT: 127.0.0.1
+          MYSQL_DATABASE: university
+          MYSQL_ROOT_PASSWORD: password
+          DATABASE_NAME: university
+          DATABASE_USERNAME: root
+          DATABASE_ENDPOINT: 127.0.0.1
         ports:
           # Opens port 3306 on service container and host
           # https://docs.github.com/en/actions/using-containerized-services/about-service-containers
