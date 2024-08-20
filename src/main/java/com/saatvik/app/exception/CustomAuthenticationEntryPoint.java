@@ -38,8 +38,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             exceptionResolver.resolveException(request, response, null,exception);
         }else {
             var status = response.getStatus() == 200 ? 403 : response.getStatus();
-            RestErrorResponse re = new RestErrorResponse(
-                    status, authException.getMessage());
+            RestErrorResponse re = new RestErrorResponse(status, authException.getMessage());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(status);
             OutputStream responseStream = response.getOutputStream();

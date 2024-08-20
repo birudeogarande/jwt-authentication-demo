@@ -40,6 +40,7 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(re);
     }
 
+
     @ExceptionHandler(InsufficientAuthenticationException.class)
     @ResponseBody
     public ProblemDetail handleInsufficientAuthenticationException(InsufficientAuthenticationException exception) {
@@ -47,10 +48,26 @@ public class GlobalExceptionHandler {
         return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN,"You don't have permission to access this resource!");
     }
 
+    @ExceptionHandler(InvalidItemCode.class)
+    @ResponseBody
+    public ProblemDetail handleInsufficientAuthenticationException(InvalidItemCode exception) {
+        log.error(exception.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,exception.getMessage());
+    }
+
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
     public ProblemDetail handleAuthenticationException(AuthenticationException exception) {
         log.error(exception.getMessage());
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseEntity<RestErrorResponse> handleException(Exception exception) {
+        log.error(exception.getMessage());
+        RestErrorResponse re = new RestErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                exception.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(re);
     }
 }
