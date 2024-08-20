@@ -41,6 +41,11 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         check-latest: true
+      env:
+          DATABASE_NAME: university
+          mysqlusername: root
+          mysqlpwd: password
+          DATABASE_ENDPOINT: 127.0.0.1
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
