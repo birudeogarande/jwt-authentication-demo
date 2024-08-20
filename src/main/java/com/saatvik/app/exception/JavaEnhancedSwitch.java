@@ -3,8 +3,6 @@ package com.saatvik.app.exception;
 
 import org.springframework.stereotype.Component;
 
-import static java.lang.StringTemplate.STR;
-
 @Component
 public class JavaEnhancedSwitch {
     public  String getItemNameByCode(int itemCode) throws InvalidItemCode {
@@ -16,7 +14,7 @@ public class JavaEnhancedSwitch {
             case 3 :
                 yield "It's a mobile phone!";
                  default :
-                    throw new InvalidItemCode(STR."\{itemCode} is an unknown device!");
+                    throw new InvalidItemCode(itemCode +" is an unknown device!");
         };
     }
 
@@ -27,7 +25,7 @@ public class JavaEnhancedSwitch {
         return switch (day) {
             case 1,7 -> "Weekend";
             case 2,3,4,5,6 ->"Weekday";
-            default -> throw new InvalidDayException(STR."Day should be between 1-7, incorrect value: \{day}");
+            default -> throw new InvalidDayException("Day should be between 1-7, incorrect value: "+day);
         };
     }
 }
