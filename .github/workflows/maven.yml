@@ -13,7 +13,9 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+env: # Or as an environment variable
+    mysqlusername: ${{mysqlusername}}
+    mysqlpwd: ${{mysqlpwd}}
 jobs:
   build:
 
@@ -46,6 +48,3 @@ jobs:
         check-latest: true
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    env: # Or as an environment variable
-        mysqlusername: ${{mysqlusername}}
-        mysqlpwd: ${{mysqlpwd}}
