@@ -1,5 +1,6 @@
 package com.saatvik.app.controller;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +20,9 @@ class UserControllerTest {
     MockMvc mvc;
 
     @Test
+    @DisplayName("""
+            Welcome api test case
+            """)
     void welcome() throws Exception {
         mvc.perform(get("/auth/welcome"))
                 .andExpect(content().string("Welcome this endpoint is not secure"))
@@ -26,6 +30,9 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName(value = """
+            userProfile pass test case
+            """)
     @WithMockUser
     void userProfile() throws Exception {
         mvc.perform(get("/auth/user/userProfile"))
@@ -34,11 +41,31 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", roles={"ADMIN"})
-    void adminProfile() throws Exception {
-        mvc.perform(get("/auth/admin/adminProfile"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Welcome to Admin Profile"));
+    @DisplayName(value = """
+            userProfile fail test case
+            """)
+    void userProfileFail() throws Exception {
+        mvc.perform(get("/auth/user/userProfile"))
+                .andExpect(status().isForbidden());
+    }
 
+    @Test
+    @DisplayName("""
+            adminProfile pass testcase
+            """)
+    @WithMockUser(username = "admin", roles={"ADMIN"})
+    void adminProfilePass() throws Exception {
+        mvc.perform(get("/auth/admin/adminProfile"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("""
+            adminProfile fail testcase
+            """)
+    @WithMockUser
+    void adminProfileFail() throws Exception {
+        mvc.perform(get("/auth/admin/adminProfile"))
+                .andExpect(status().isForbidden());
     }
 }
