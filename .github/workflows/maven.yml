@@ -14,8 +14,8 @@ on:
   pull_request:
     branches: [ "master" ]
 env: # Or as an environment variable
-    mysqlusername: ${{mysqlusername}}
-    mysqlpwd: ${{mysqlpwd}}
+    mysqlusername: root
+    mysqlpwd: password
 jobs:
   build:
 
