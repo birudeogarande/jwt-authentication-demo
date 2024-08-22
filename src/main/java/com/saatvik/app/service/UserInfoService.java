@@ -2,6 +2,7 @@ package com.saatvik.app.service;
 
 import com.saatvik.app.entity.UserInfo;
 import com.saatvik.app.repository.UserInfoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserInfoService implements UserDetailsService {
 
     @Autowired
@@ -32,7 +34,17 @@ public class UserInfoService implements UserDetailsService {
     public String addUser(UserInfo userInfo) {
         // Encode password before saving the user
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
-        repository.save(userInfo);
+        Optional<UserInfo> existing = repository.findByEmail(userInfo.getEmail());
+        if (existing.isEmpty()) {
+            var finalUserInfo = existing.orElseGet(() -> userInfo);
+            repository.save(finalUserInfo);
+        }else {
+            log.info("User already exist with email "+userInfo.getEmail());
+        }
         return "User Added Successfully";
+    }
+
+    public void deleteUser(String email) {
+        repository.deleteByEmail(email);
     }
 }

@@ -5,6 +5,8 @@ import com.saatvik.app.entity.UserInfo;
 import com.saatvik.app.service.JwtService;
 import com.saatvik.app.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,4 +60,12 @@ public class UserController {
             throw new UsernameNotFoundException("Invalid user request!");
         }
     }
+
+    @DeleteMapping("/deleteUser/{email}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String email){
+        service.deleteUser(email);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+
+    }
+
 }
