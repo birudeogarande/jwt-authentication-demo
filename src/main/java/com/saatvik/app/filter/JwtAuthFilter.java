@@ -2,17 +2,13 @@ package com.saatvik.app.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.saatvik.app.exception.RestErrorResponse;
-import com.saatvik.app.exception.TokenExpiredException;
 import com.saatvik.app.service.JwtService;
 import com.saatvik.app.service.UserInfoService;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jdk.jfr.ContentType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +21,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -50,7 +48,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             log.info(request.getRequestURI());
             // Check if the header starts with "Bearer "
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = authHeader.substring(7); // Extract token
+                Optional<String> authToken = Arrays.stream(authHeader.split("\\s+"))
+                        .skip(1)
+                        .findFirst();
+                token = authToken.orElseThrow();
                 username = jwtService.extractUsername(token); // Extract username from token
             }
 
