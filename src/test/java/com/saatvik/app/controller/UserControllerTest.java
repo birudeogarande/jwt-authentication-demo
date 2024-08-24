@@ -1,6 +1,7 @@
 package com.saatvik.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.saatvik.app.custom.WithCustomUser;
 import com.saatvik.app.dto.UserInfo;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
@@ -79,8 +80,10 @@ class UserControllerTest {
     @DisplayName("""
             adminProfile pass testcase
             """)
-    @WithUserDetails(userDetailsServiceBeanName = "userInfoService", value = "testuser@gmail.com")
-    @Disabled
+//    @WithUserDetails("saatvik.garande@gmail.com")
+        //(userDetailsServiceBeanName = "userInfoService", value = "testuser@gmail.com")
+//    @Disabled
+    @WithCustomUser
     void adminProfilePass() throws Exception {
         mvc.perform(get("/auth/admin/adminProfile"))
                 .andExpect(status().isOk())

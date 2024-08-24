@@ -22,7 +22,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
+
 
 @Component
 @Slf4j
@@ -41,12 +41,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try{
 
         // Retrieve the Authorization header
-        String authHeader = request.getHeader("Authorization");
+        var authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
             // Check if the header starts with "Bearer "
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = Arrays.stream(authHeader.split("\\s+"))
+                var regex = "\\s+";
+                token = Arrays.stream(authHeader.split(regex))
                         .skip(1)
                         .findFirst().orElseThrow();
                 username = jwtService.extractUsername(token); // Extract username from token
