@@ -44,14 +44,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
-            log.info(request.getPathInfo());
-            log.info(request.getRequestURI());
+            log.debug(request.getPathInfo());
+            log.debug(request.getRequestURI());
             // Check if the header starts with "Bearer "
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                Optional<String> authToken = Arrays.stream(authHeader.split("\\s+"))
+                token = Arrays.stream(authHeader.split("\\s+"))
                         .skip(1)
-                        .findFirst();
-                token = authToken.orElseThrow();
+                        .findFirst().orElseThrow();
                 username = jwtService.extractUsername(token); // Extract username from token
             }
 
