@@ -4,7 +4,6 @@ import com.saatvik.app.dto.AuthRequest;
 import com.saatvik.app.entity.UserInfo;
 import com.saatvik.app.service.JwtService;
 import com.saatvik.app.service.UserInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,29 +13,51 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ *  API for user crud operation.
+ */
 @RestController
 @RequestMapping("/auth")
 public class UserController {
 
-    @Autowired
-    private UserInfoService service;
+    private final UserInfoService service;
 
-    @Autowired
-    private JwtService jwtService;
+     private final JwtService jwtService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
+    private final AuthenticationManager authenticationManager;
+
+    /**
+     * @param service {@link UserInfoService}
+     * @param jwtService {@link JwtService}
+     * @param authenticationManager {@link AuthenticationManager}
+     */
+    public UserController(UserInfoService service, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.service = service;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
+
+    /**
+     * @return String
+     */
     @GetMapping("/welcome")
     public String welcome() {
         return "Welcome this endpoint is not secure";
     }
 
+    /**
+     * @param userInfo {@link UserInfoService}
+     * @return String
+     */
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
         return service.addUser(userInfo);
     }
 
+    /**
+     * @return String
+     */
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String userProfile() {

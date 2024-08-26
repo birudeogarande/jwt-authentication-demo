@@ -1,6 +1,5 @@
 package com.saatvik.app.service;
 
-import com.saatvik.app.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,7 +26,6 @@ public class JwtService {
         return createToken(claims, userName);
     }
 
-    // Create a JWT token with specified claims and subject (user name)
     private String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
                 .setClaims(claims)
