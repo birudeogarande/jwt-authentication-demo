@@ -1,0 +1,18 @@
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/university
+    username: ${mysqlusername}
+    password: ${mysqlpwd}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  application:
+    name: spring-security-app
+server:
+  port: 9191
