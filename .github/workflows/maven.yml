@@ -14,9 +14,6 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          # The MySQL docker container requires these environment variables to be set
-          # so we can create and migrate the test database.
-          # See: https://hub.docker.com/_/mysql
           MYSQL_DATABASE: university
           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DATABASE_NAME: university
