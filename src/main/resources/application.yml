@@ -11,6 +11,10 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        boot:
+         allow_jdbc_metadata_access: false
   application:
     name: spring-security-app
   data:
@@ -18,3 +22,6 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
 server:
   port: 9191
+
+
+#spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false
