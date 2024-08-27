@@ -11,8 +11,10 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
   application:
     name: spring-security-app
+  data:
+    jdbc:
+      dialect: org.hibernate.dialect.MySQL5Dialect
 server:
   port: 9191
