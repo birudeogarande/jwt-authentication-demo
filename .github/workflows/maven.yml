@@ -9,7 +9,7 @@ env: # Or as an environment variable
   DB_PASSWORD: ${{ secrets.MYSQL_DB_PASSWORD }}
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     services:
       mysql:
         image: mysql:8.0
