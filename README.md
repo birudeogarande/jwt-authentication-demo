@@ -5,3 +5,6 @@ To access secure api user need to pass JWT token in header.
 In this example you can also check best way to handle spring boot security exception in generic way. 
 
 and added spring boot mockmvc testcases for unit testing both secure and non-secure api.
+
+
+added self hosted runner
